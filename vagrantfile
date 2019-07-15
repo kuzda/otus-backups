@@ -1,30 +1,27 @@
 Vagrant.configure ("2") do |config|
-	config.vm.box = "centos/7"
-	config.vm.box_check_update = false
-	
-	config.vm.define "server" do |server|
-		server.post_up_message = "Hi. Backup's Server installation success"
-		server.vm.hostname = "BackupServer"
-		server.vm.network "public network"
-	config.vm.provider "virtualbox" do |vb|
-		vb.gui = false
-		vb.name = "Backup_Server"
-		vb.memory = "2048"
-		vb.cpus = 2
-	end
-	end
-	
-	config.vm.define "server" do |client|
-                client.post_up_message = "Hi. Client installation success"
-                client.vm.hostname = "Client"
-                sclient.vm.network "public network"
-        config.vm.provider "virtualbox" do |vb|
-                vb.gui = false
-		vb.name = "Client"
-                vb.memory = "768"
-                vb.cpus = 1
-        end
-        end          		 
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+    
+  config.vm.define "server" do |server|
+    server.vm.post_up_message = "Hi. Installation of Backup server is sucsessfull."
+    server.vm.hostname = "BeckupServer"
+    server.vm.network "public_network", bridge: "enp1s0"
+    server.vm.provider "virtualbox" do |vb|
+      vb.name = "BackupSrv"
+      vb.memory = "2048"
+      vb.cpus = 2
+    end
+  end
 
-
+  config.vm.define "client" do |client|
+    client.vm.post_up_message = "Hi/ Installation of client is sucsessfull"
+    client.vm.hostname = "client"
+    client.vm.network "public_network", bridge: "enp1s0"
+    client.vm.provider "virtualbox" do |vb|
+      vb.name = "BackupClient"
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+  end
+	
 end
